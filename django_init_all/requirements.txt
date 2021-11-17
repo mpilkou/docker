@@ -1,0 +1,22 @@
+django
+
+# db
+mysqlclient
+psycopg2
+
+# api
+djangorestframework
+drf-yasg
+
+# api oauth2
+django-oauth-toolkit
+
+#.env
+python-dotenv
+
+#RSA
+# cryptography
+# pyjwt
+
+# gunicorn
+gunicorn
