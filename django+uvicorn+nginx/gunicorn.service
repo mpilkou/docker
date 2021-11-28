@@ -1,0 +1,19 @@
+# /etc/systemd/system/gunicorn.service
+[Unit]
+Description=gunicorn daemon
+Requires=gunicorn.socket
+After=network.target
+
+[Service]
+User=root
+Group=www-data
+WorkingDirectory=/usr/src/app/django_code/
+ExecStart=/usr/local/bin/gunicorn \
+          --access-logfile - \
+          --workers 3 \
+          -k uvicorn.workers.UvicornWorker \
+          --bind unix:/run/gunicorn.sock \
+          django_code.asgi:application
+
+[Install]
+WantedBy=multi-user.target

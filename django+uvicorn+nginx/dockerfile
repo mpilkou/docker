@@ -1,0 +1,48 @@
+# docker push mpilkou/djando_mysql_postgresql:latest
+
+FROM python:3
+
+
+RUN apt update
+RUN apt install -y
+#RUN apt install -y python3-pip python3-dev libpq-dev postgresql postgresql-contrib nginx curl
+RUN apt install -y nginx curl systemctl nano
+# systemd
+
+RUN python3 -m pip install --upgrade pip
+RUN python3 -m pip install django gunicorn uvicorn psycopg2 mysqlclient
+
+# to add
+#RUN apt install -y nano
+# RUN apt install -y systemd
+#RUN apt install -y systemctl
+
+RUN rm -rf /var/lib/apt/lists/*
+
+WORKDIR /usr/src/app
+
+# CREATE PROJECT WITH CONFIG
+COPY nginx_restart.sh ./nginx_restart.sh
+RUN python3 -m django startproject django_code
+
+WORKDIR /usr/src/app/django_code
+COPY asgi.py ./django_code/asgi.py
+
+# NGINX PROXY UVICORN
+# UVICORN FILES
+COPY gunicorn.service /etc/systemd/system/gunicorn.service
+COPY gunicorn.socket /etc/systemd/system/gunicorn.socket
+
+# NGINX FILES
+COPY django_code /etc/nginx/sites-available/django_code
+RUN ln -s /etc/nginx/sites-available/django_code /etc/nginx/sites-enabled
+
+
+# ENABLE SERVICES
+RUN systemctl enable gunicorn.service
+RUN systemctl enable gunicorn.socket
+RUN systemctl enable nginx.service
+
+EXPOSE 8000 80
+
+CMD [ "/bin/bash" ]
