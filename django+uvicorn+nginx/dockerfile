@@ -5,17 +5,10 @@ FROM python:3
 
 RUN apt update
 RUN apt install -y
-#RUN apt install -y python3-pip python3-dev libpq-dev postgresql postgresql-contrib nginx curl
 RUN apt install -y nginx curl systemctl nano
-# systemd
 
 RUN python3 -m pip install --upgrade pip
 RUN python3 -m pip install django gunicorn uvicorn psycopg2 mysqlclient
-
-# to add
-#RUN apt install -y nano
-# RUN apt install -y systemd
-#RUN apt install -y systemctl
 
 RUN rm -rf /var/lib/apt/lists/*
 
