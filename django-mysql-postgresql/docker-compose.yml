@@ -19,7 +19,7 @@ services:
     image: postgres
     container_name: postgres_container
     volumes:
-      - /Users/matvej/docker_volumes/psql-data:/var/lib/postgresql/data
+      - ./docker-volumes/psql-data:/var/lib/postgresql/data
     environment:
       - POSTGRES_DB=psql_db
       - POSTGRES_USER=psql_user
@@ -37,47 +37,15 @@ services:
       - postgres
     volumes:
       - type: bind
-        source: /Users/matvej/docker_volumes/django_code
+        source: ./docker-volumes/django_code
         target: /usr/src/app/django_code
     # entrypoint: django-admin startproject django_code
-#      - /Users/matvej/docker_volumes/code:/usr/src/app
-#      - type: volume
-#        source: django_code
-#        target: /usr/src/app/django_code
-#        volume:
-#          nocopy: false
-      #- /Users/matvej/docker_volumes/django_code:/usr/src/app/django_code
-        #/usr/src/app/django_code
-        #
-#      - type: bind
-#        source: /Users/matvej/docker_volumes/shared
-#        target: /usr/src/app/shared
-#        bind-propagation: shared
-#        volume:
-#          nocopy: false
-#      - type: bind
-#        source: /Users/matvej/docker_volumes/rshared
-#        target: /usr/src/app/rshared
-#        bind-propagation: rshared
-#        volume:
-#          nocopy: false
-#      - type: bind
-#        source: /Users/matvej/docker_volumes/private
-#        target: /usr/src/app/private
-#        bind-propagation: private
-#        volume:
-#          nocopy: false
-          #django_code
     ports:
       - "8000:8000"
       - "80:80"
     networks:
       mynet:
         ipv4_address: 10.10.2.10
-
-#volumes: 
-#  django_code:
-#  - /Users/matvej/docker_volumes/django_code:django_code
 
 networks:
   mynet:
