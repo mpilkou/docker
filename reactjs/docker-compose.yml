@@ -1,0 +1,13 @@
+version: "3"
+   
+services:
+  web:
+    build: .
+    container_name: react_container
+    volumes:
+      - type: bind
+        source: /Users/matvej/docker_volumes/reactjs
+        target: /usr/src/reactjs/react-app
+    ports:
+      - "3000:3000"
+    tty: true

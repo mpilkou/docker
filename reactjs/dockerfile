@@ -1,0 +1,11 @@
+FROM node:latest
+
+WORKDIR /usr/src/reactjs
+
+# RUN npx create-react-app react-app
+
+WORKDIR /usr/src/reactjs/react-app
+
+EXPOSE 3000 3000
+
+CMD [ "/bin/bash" ]
